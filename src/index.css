@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --background: hsl(241, 95%, 9%);
+  --foreground: #fff;
+
+  --neutral-900: hsl(243, 96%, 9%);
+  --neutral-800: hsl(243, 27%, 20%);
+  --neutral-700: hsl(243, 23%, 24%);
+  --neutral-600: hsl(243, 23%, 30%);
+  --neutral-300: hsl(240, 6%, 70%);
+  --neutral-200: hsl(250, 6%, 84%);
+  --neutral-0: hsl(0, 0%, 100%);
+
+  --orange-500: hsl(28, 100%, 52%);
+  --blue-500: hsl(233, 67%, 56%);
+  --blue-700: hsl(248, 70%, 36%);
+
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-bricolage-grotesque: "Bricolage Grotesque", sans-serif;
+}
+
+@theme inline {
+  --background: var(--background);
+  --foreground: var(--foreground);
+
+  --font-dm-sans: var(--font-dm-sans);
+  --font-bricolage-grotesque: var(--font-bricolage-grotesque);
+
+  --neutral-900: var(--neutral-900);
+  --neutral-800: var(--neutral-800);
+  --neutral-700: var(--neutral-700);
+  --neutral-600: var(--neutral-600);
+  --neutral-300: var(--neutral-300);
+  --neutral-200: var(--neutral-200);
+  --neutral-0: var(--neutral-0);
+
+  --orange-500: var(--orange-500);
+  --blue-500: var(--blue-500);
+  --blue-700: var(--blue-700);
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), Arial, Helvetica, sans-serif;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--neutral-600);
+  border: 1px solid var(--neutral-500);
+  border-radius: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.ball-1, .ball-2, .ball-3 {
+  animation: ballBounce 0.6s infinite alternate;
+}
+
+.ball-1 {
+  animation-delay: 0.2s;
+}
+
+.ball-2 {
+  animation-delay: 0.4s;
+}
+
+.ball-3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes ballBounce {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
