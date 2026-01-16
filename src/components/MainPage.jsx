@@ -347,15 +347,6 @@ const MainPage = (props) => {
     setIsInputFocused(false);
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    console.log(data)
-  };
-
   useEffect(() => {
     if (props.isLoading || !props.weatherData) {
       setHourlyArr([]);
@@ -453,7 +444,7 @@ const MainPage = (props) => {
         </h1>
         <form
           className="flex gap-4 max-[480px]:flex-col max-[480px]:gap-2"
-          onSubmit={handleFormSubmit}
+          onSubmit={() => props.handleFormSubmit(event)}
         >
           <div className="relative">
             <input
@@ -497,7 +488,7 @@ const MainPage = (props) => {
             Search
           </button>
         </form>
-        {!props.isError && (
+        {!props.isError && !props.notFound && (
           <section className="flex flex-wrap w-full gap-6 justify-center">
             <div className="flex flex-col basis-174 gap-6 max-[480px]:items-center">
               <div
@@ -698,7 +689,7 @@ const MainPage = (props) => {
             </div>
           </>
         )}
-        {!props.weatherData && !props.isLoading && (
+        {props.notFound && (
           <>
             <h3 className="text-2xl font-bold">No search result found!</h3>
           </>

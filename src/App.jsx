@@ -26,7 +26,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [citiesLoading, setCitiesLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [notFound, setNotFound] = useState(null);
+  const [notFound, setNotFound] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("Karachi");
 
   useEffect(() => {
     const fetchData = async (params) => {
@@ -228,7 +229,7 @@ function App() {
 
     const timeoutId = setTimeout(async () => {
       try {
-        setCitiesLoading(true)
+        setCitiesLoading(true);
         const response = await fetch(
           `https://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=4&appid=60afdc0a6e696d68c440a0f3ef15cef5`
         );
@@ -247,7 +248,7 @@ function App() {
         }));
 
         setCitySuggestions(suggestions);
-        setCitiesLoading(false)
+        setCitiesLoading(false);
       } catch (err) {
         console.log("Error fetching cities:", err);
         setCitySuggestions([]);
@@ -256,6 +257,40 @@ function App() {
 
     return () => clearTimeout(timeoutId);
   }, [searchInput]);
+
+  useEffect(() => {
+    const fetchData = async (searchQuery) => {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/geo/1.0/direct?q=${searchQuery}&limit=4&appid=60afdc0a6e696d68c440a0f3ef15cef5`
+        );
+
+        const data = await response.json();
+
+        const suggestions = data.map((city, index) => ({
+          id: index,
+          name: city.name,
+          country: city.country,
+          state: city.state || "",
+          latitude: city.lat,
+          longitude: city.lon,
+          displayName: `${city.name}, ${city.country}`
+        }));
+        
+        if (suggestions.length > 0) {
+          setNotFound(false)
+          handleCitySelect(suggestions[0])
+        } else {
+          setNotFound(true)
+        }
+      } catch (err) {
+        console.log("Error fetching cities:", err);
+        setNotFound(true);
+      }
+    };
+
+    fetchData(searchQuery);
+  }, [searchQuery]);
 
   const handleCitySelect = (city) => {
     setSearchInput(city.displayName);
@@ -267,10 +302,16 @@ function App() {
   };
 
   const retryFetch = () => {
-    setParams(prev => ({
-      ...prev
-    }))
-  }
+    setParams((prev) => ({
+      ...prev,
+    }));
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    setSearchQuery(searchInput);
+  };
 
   return (
     <>
@@ -285,6 +326,7 @@ function App() {
         setSearchInput={setSearchInput}
         handleCitySelect={handleCitySelect}
         retryFetch={retryFetch}
+        handleFormSubmit={handleFormSubmit}
       />
     </>
   );
