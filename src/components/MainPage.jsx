@@ -18,13 +18,13 @@ import fogIcon from "../assets/icon-fog.webp";
 import drizzleIcon from "../assets/icon-drizzle.webp";
 
 const daysOfTheWeek = [
-  { id: 0, day: "Monday" },
-  { id: 1, day: "Tuesday" },
-  { id: 2, day: "Wednesday" },
-  { id: 3, day: "Thursday" },
-  { id: 4, day: "Friday" },
-  { id: 5, day: "Saturday" },
-  { id: 6, day: "Sunday" },
+  { id: 0, day: "Sunday" },
+  { id: 1, day: "Monday" },
+  { id: 2, day: "Tuesday" },
+  { id: 3, day: "Wednesday" },
+  { id: 4, day: "Thursday" },
+  { id: 5, day: "Friday" },
+  { id: 6, day: "Saturday" },
 ];
 
 const components = ["Temperature", "Wind", "Humidity", "Precipitation"];
@@ -202,7 +202,7 @@ const MainPage = (props) => {
   const [weekDaysPopUp, setWeekDaysPopUp] = useState(false);
   const [settingsPopUp, setSettingsPopUp] = useState(false);
   const [weekDay, setWeekDay] = useState(
-    daysOfTheWeek[new Date().getDay() - 1].day
+    daysOfTheWeek[new Date().getDay()].day
   );
   const [hourlyArr, setHourlyArr] = useState(null);
   const [unitSystem, setUnitSystem] = useState("Metric");
